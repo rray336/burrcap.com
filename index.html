@@ -1,0 +1,180 @@
+<!-- ABOUTME: Landing page for burrcap.com listing finance and AI apps by Rahul Ray. -->
+<!-- ABOUTME: Single-page site hosted on GitHub Pages. -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>FinTech AI Lab</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background: #003366;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .tile {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .tile a {
+      text-decoration: none;
+      color: #003366;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: block;
+      margin-top: 0.5rem;
+    }
+    .icon {
+      font-size: 40px;
+      color: #0066cc;
+    }
+    .description {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.5rem;
+      line-height: 1.4;
+    }
+    /* Optional color variations */
+    .green { color: #28a745; }
+    .blue { color: #17a2b8; }
+    .gold { color: #ffc107; }
+    .red { color: #dc3545; }
+  
+      footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #777;
+      padding: 0.5rem;
+      border-top: 1px solid #ddd;
+      background: #f9f9f9;
+    }
+
+  
+  </style>
+</head>
+<body>
+  <header>FinTech AI Lab</header>
+
+  <div class="container">
+    <!-- ==========================================
+         START: Add new tiles below this line
+         Copy and paste one of the examples below,
+         then change the icon class, link, and title.
+         ========================================== -->
+
+    <div class="tile">
+      <div class="icon red"><i class="fa-solid fa-blog"></i></div>
+      <a href="https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-my-multi-agent-socratic-reasoning-journey-305c081611c6" target="_blank">Building an ARC-AGI-2 Solver (Part 1) (blog)</a>
+      <div class="description">Building an ARC-2 Solver: My Multi-Agent Socratic Reasoning Journey Building a system that can solve ARC-AGI-2 (i.e., the second iteration of the Abstraction and Reasoning Corpus for Artificial …</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon green"><i class="fa-solid fa-blog"></i></div>
+      <a href="https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-part-2-d89969e5a005" target="_blank">Building an ARC-AGI-2 Solver (Part 2) (blog)</a>
+      <div class="description">ARC-AGI-2 reveals LLM perception gaps: why vision models struggle to count holes—and how text, high-res images, and reflection improve results</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon gold"><i class="fa-solid fa-blog"></i></div>
+      <a href="https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-from-socratic-panels-to-a-single-oracle-e928cdddf20c" target="_blank">Building an ARC-AGI-2 Solver (Part 3) (blog)</a>
+      <div class="description">Building an ARC-2 solver: from multi-agent debate to a tool-augmented Oracle achieving 50–70%+ on the public evaluation dataset.</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon blue"><i class="fas fa-lightbulb"></i></div>
+      <a href="https://github.com/rray336/chat-trm" target="_blank">chat-TRM (code)</a>
+      <div class="description">Experimental Tiny Recursion Model (TRM) Chat App with only 3.5M parameters</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon gold"><i class="fas fa-chart-line"></i></div>
+      <a href="https://web-production-00170.up.railway.app" target="_blank">Data Analyzer (app)</a>
+      <div class="description">Perform data analysis using advanced machine learning techniques</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon red"><i class="fas fa-hand-holding-usd"></i></div>
+      <a href="https://earnings-transcript-analyzer-production.up.railway.app" target="_blank">Earnings Transcript Analyzer (app) </a>
+      <div class="description">Generate summary and line-by-line sentiment analysis of documents (e.g., speeches, earnings calls)</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon green"><i class="fas fa-hand-holding-usd"></i></div>
+      <a href="https://erfindata.up.railway.app/" target="_blank">ERFinData (app)</a>
+      <div class="description">Extract raw financial data from earnings press releases</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon blue"><i class="fas fa-chart-line"></i></div>
+      <a href="https://kpix.up.railway.app/" target="_blank">KPIx (app)</a>
+      <div class="description">Perform slide-by-slide analysis and executive summary of a slide deck or KPI report</div>
+    </div>
+
+     <div class="tile">
+      <div class="icon gold"><i class="fas fa-balance-scale"></i></div>
+      <a href="https://macro-data-analyzer-production.up.railway.app" target="_blank">Macro AI Summary (app)</a>
+      <div class="description">AI-generated summaries of charts in an multi-sheet excel file</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon red"><i class="fas fa-chart-line"></i></div>
+      <a href="https://model-analysis-production.up.railway.app/" target="_blank">Model Analysis (app)</a>
+      <div class="description">Drill-down analysis of live excel financial models</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon green"><i class="fas fa-balance-scale"></i></div>
+      <a href="https://investor-qa-assistant.vercel.app" target="_blank">Q&A Assistant (app)</a>
+      <div class="description">Query an unlimited set of pdf files, exhaustively or RAG-based</div>
+    </div>
+
+    <div class="tile">
+      <div class="icon blue"><i class="fas fa-balance-scale"></i></div>
+      <a href="https://speech-writer.up.railway.app/" target="_blank">Speech Writer (app)</a>
+      <div class="description">Train on a speaker style.  Then create  speeches in that style just from bullet points</div>
+    </div>
+
+
+    <div class="tile">
+      <div class="icon gold"><i class="fas fa-lightbulb"></i></div>
+      <a href="https://thinktank-ai.up.railway.app/" target="_blank">ThinkTank-AI (app)</a>
+      <div class="description">Create virtual panels or focus groups using AI agents</div>
+    </div>
+
+    <!-- ==========================================
+         END: Add new tiles above this line
+         ========================================== -->
+  </div>
+  <footer>
+    A project by <a href="https://github.com/rray336" target="_blank">Rahul Ray (github.com/rray336)</a> |
+    <a href="https://www.linkedin.com/in/rahul-ray-a5130735" target="_blank">LinkedIn</a><br>
+    These AI applications are prototypes provided for educational and illustrative use. They should not be relied upon for financial, investment, or legal decision-making.
+  </footer>
+
+</body>
+</html>
