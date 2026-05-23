@@ -1,311 +1,134 @@
-<!-- ABOUTME: Landing page for burrcap.com listing finance and AI apps by Rahul Ray. -->
+<!-- ABOUTME: Landing page for burrcap.com — constellation-style interactive star map of finance and AI projects. -->
 <!-- ABOUTME: Single-page site hosted on GitHub Pages. -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FinTech AI Lab</title>
-  <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background-color: #0a1628;
-    }
-    header {
-      background: #003366;
-      color: white;
-      padding: 2rem 1.5rem;
-      text-align: center;
-    }
-    .header-title {
-      font-size: 1.8rem;
-      font-weight: bold;
-      letter-spacing: 0.04em;
-    }
-    .header-tagline {
-      font-size: 1rem;
-      color: #a8c4e0;
-      margin-top: 0.4rem;
-      font-style: italic;
-    }
-    .header-about {
-      font-size: 0.85rem;
-      color: #ccdde8;
-      max-width: 680px;
-      margin: 0.8rem auto 0;
-      line-height: 1.6;
-    }
-    .header-about a {
-      color: #a8c4e0;
-    }
-    .tile {
-      background: white;
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .tile:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-    .tile a {
-      text-decoration: none;
-      color: #003366;
-      font-weight: bold;
-      font-size: 1.1rem;
-      display: block;
-      margin-top: 0.5rem;
-    }
-    .icon {
-      font-size: 40px;
-      color: #0066cc;
-    }
-    .description {
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 0.5rem;
-      line-height: 1.4;
-    }
-    /* Optional color variations */
-    .green { color: #28a745; }
-    .blue { color: #17a2b8; }
-    .gold { color: #ffc107; }
-    .red { color: #dc3545; }
-    .purple { color: #6f42c1; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .section {
-      max-width: 1200px;
-      margin: 1.5rem auto 0;
-      padding: 0 1rem 1.5rem;
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #030308;
     }
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #a8c4e0;
+
+    canvas { display: block; cursor: crosshair; }
+
+    #ui { position: fixed; inset: 0; pointer-events: none; }
+
+    .lbl {
+      position: absolute;
+      transform: translate(-50%, 0);
+      font-family: 'Segoe UI', system-ui, monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border-bottom: 2px solid #a8c4e0;
-      padding-bottom: 0.3rem;
-      margin-bottom: 1rem;
-    }
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-    .section-tools .icon    { color: #0066cc; }
-    .section-opensource .icon { color: #28a745; }
-    .section-writing .icon  { color: #6f42c1; }
-
-      footer {
+      pointer-events: none;
+      white-space: nowrap;
       text-align: center;
-      font-size: 0.8rem;
-      color: #a8c4e0;
-      padding: 1rem 0.5rem;
-      border-top: 1px solid #1e3a5f;
-      background: #071020;
-    }
-    footer a {
-      color: #a8c4e0;
+      transition: opacity 0.25s;
     }
 
-    @media (max-width: 480px) {
-      .header-title {
-        font-size: 1.4rem;
-      }
-      .header-tagline {
-        font-size: 0.9rem;
-      }
+    .badge {
+      display: block;
+      margin: 3px auto 0;
+      padding: 1px 5px;
+      border-radius: 2px;
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      width: fit-content;
     }
+
+    .badge-tools  { color: #60a5fa; border: 1px solid rgba(96,165,250,0.4); background: rgba(96,165,250,0.08); }
+    .badge-oss    { color: #4ade80; border: 1px solid rgba(74,222,128,0.4); background: rgba(74,222,128,0.08); }
+    .badge-writing{ color: #c084fc; border: 1px solid rgba(192,132,252,0.4); background: rgba(192,132,252,0.08); }
+
+    #tooltip {
+      position: fixed;
+      display: none;
+      pointer-events: none;
+      background: rgba(6,8,20,0.92);
+      border: 1px solid rgba(120,140,200,0.22);
+      border-radius: 6px;
+      padding: 9px 14px;
+      max-width: 260px;
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+    #tt-name { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 12px; font-weight: 600; color: rgba(220,232,255,0.95); margin-bottom: 4px; }
+    #tt-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 10px; color: rgba(140,165,220,0.70); line-height: 1.5; }
+
+    #page-title {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.22);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    #legend {
+      position: fixed;
+      top: 52px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .leg {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .leg-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      text-align: center;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.75rem;
+      color: rgba(168,196,224,0.6);
+      padding: 0.6rem 0.5rem;
+      border-top: 1px solid rgba(30,58,95,0.4);
+      background: rgba(7,16,32,0.7);
+      backdrop-filter: blur(6px);
+      pointer-events: auto;
+      z-index: 20;
+    }
+    footer a { color: rgba(168,196,224,0.8); text-decoration: none; }
+    footer a:hover { color: #a8c4e0; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="header-title">FinTech AI Lab</div>
-    <div class="header-tagline">Finance tools and AI experiments by Rahul Ray</div>
-    <div class="header-about">
-      Rahul Ray is a finance professional and vibe coder focused on applying AI to finance.
-      Connect on <a href="https://www.linkedin.com/in/rahul-ray-a5130735" target="_blank">LinkedIn</a>.
-    </div>
-  </header>
-
-  <!-- Tools -->
-  <div class="section section-tools">
-    <div class="section-title">Tools</div>
-    <div class="container">
-      <div class="tile">
-        <div class="icon"><i class="fas fa-table-columns"></i></div>
-        <a href="https://web-production-00170.up.railway.app" target="_blank">Data Analyzer</a>
-        <div class="description">Perform data analysis using advanced machine learning techniques</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-file-waveform"></i></div>
-        <a href="https://earnings-transcript-analyzer-production.up.railway.app" target="_blank">Earnings Transcript Analyzer</a>
-        <div class="description">Generate summary and line-by-line sentiment analysis of documents (e.g., speeches, earnings calls)</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-file-invoice-dollar"></i></div>
-        <a href="https://erfindata.up.railway.app/" target="_blank">ERFinData</a>
-        <div class="description">Extract raw financial data from earnings press releases</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-folder-open"></i></div>
-        <a href="https://file-repo-production.up.railway.app/" target="_blank">file-repo</a>
-        <div class="description">Lightweight file repository utility for organizing and managing local file collections</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-chalkboard"></i></div>
-        <a href="https://kpix.up.railway.app/" target="_blank">KPIx</a>
-        <div class="description">Perform slide-by-slide analysis and executive summary of a slide deck or KPI report</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-chart-area"></i></div>
-        <a href="https://macro-data-analyzer-production.up.railway.app" target="_blank">Macro AI Summary</a>
-        <div class="description">AI-generated summaries of charts in an multi-sheet excel file</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-file-excel"></i></div>
-        <a href="https://model-analysis-production.up.railway.app/" target="_blank">Model Analysis</a>
-        <div class="description">Drill-down analysis of live excel financial models</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-comments"></i></div>
-        <a href="https://investor-qa-assistant.vercel.app" target="_blank">Q&amp;A Assistant</a>
-        <div class="description">Query an unlimited set of pdf files, exhaustively or RAG-based</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-microphone"></i></div>
-        <a href="https://speech-writer.up.railway.app/" target="_blank">Speech Writer</a>
-        <div class="description">Train on a speaker style. Then create speeches in that style just from bullet points</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-people-group"></i></div>
-        <a href="https://thinktank-ai.up.railway.app/" target="_blank">ThinkTank-AI</a>
-        <div class="description">Create virtual panels or focus groups using AI agents</div>
-      </div>
-    </div>
+  <canvas id="c"></canvas>
+  <div id="ui"></div>
+  <div id="tooltip">
+    <div id="tt-name"></div>
+    <div id="tt-desc"></div>
   </div>
-
-  <!-- Open Source -->
-  <div class="section section-opensource">
-    <div class="section-title">Open Source</div>
-    <div class="container">
-      <div class="tile">
-        <div class="icon"><i class="fas fa-th"></i></div>
-        <a href="https://github.com/rray336/ai-hub" target="_blank">ai-hub</a>
-        <div class="description">Constellation-style local launch dashboard — click nodes to open URLs, launch apps, run scripts, or open files</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-robot"></i></div>
-        <a href="https://github.com/rray336/chat-trm" target="_blank">chat-TRM</a>
-        <div class="description">Experimental Tiny Recursion Model (TRM) Chat App with only 3.5M parameters</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-desktop"></i></div>
-        <a href="https://github.com/rray336/end2end-desktop-automation" target="_blank">end2end-desktop-automation</a>
-        <div class="description">Image-based desktop automation framework for Windows apps — configuration-driven, works with any UI toolkit</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-search"></i></div>
-        <a href="https://github.com/rray336/gai-search-local-rr" target="_blank">Google AI Search MCP</a>
-        <div class="description">An MCP server that searches Google in AI mode and returns the AI-generated summary as plain text. Designed for use with Claude Desktop or any MCP-compatible client.</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-images"></i></div>
-        <a href="https://github.com/rray336/image-files-summary" target="_blank">image-files-summary</a>
-        <div class="description">Generate AI-powered summaries of image files in a directory</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-comment-dots"></i></div>
-        <a href="https://github.com/rray336/kaibot" target="_blank">kaibot</a>
-        <div class="description">Background AI coach that monitors your Outlook calendar, inbox, and OneDrive — and checks in with short, specific coaching messages throughout the day</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-puzzle-piece"></i></div>
-        <a href="https://github.com/rray336/oracle-arc-solver-public" target="_blank">oracle-arc-solver</a>
-        <div class="description">Solver for ARC (Abstraction and Reasoning Corpus) puzzles using oracle-guided search</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-file-pdf"></i></div>
-        <a href="https://github.com/rray336/pdf-files-concatinate" target="_blank">pdf-files-concatinate</a>
-        <div class="description">Batch-concatenate multiple PDF files into a single document in a specified order</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-film"></i></div>
-        <a href="https://github.com/rray336/split-mp4" target="_blank">split-mp4</a>
-        <div class="description">Split a large MP4 file into n equal-length segments</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-volume-up"></i></div>
-        <a href="https://github.com/rray336/text2speech" target="_blank">text2speech</a>
-        <div class="description">Converts a text file to an MP3 audio file using Microsoft's neural TTS (Jenny voice)</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fas fa-box-open"></i></div>
-        <a href="https://github.com/rray336/windows_portable_ai_app_harness" target="_blank">windows-portable-ai-app-harness</a>
-        <div class="description">Specification for building portable Windows desktop apps with AI agents — no installs, no admin rights, no command line required</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Writing -->
-  <div class="section section-writing">
-    <div class="section-title">Writing</div>
-    <div class="container">
-      <div class="tile">
-        <div class="icon"><i class="fa-solid fa-blog"></i></div>
-        <a href="https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-my-multi-agent-socratic-reasoning-journey-305c081611c6" target="_blank">Building an ARC-AGI-2 Solver (Part 1)</a>
-        <div class="description">How a multi-agent Socratic debate architecture was designed to tackle ARC-AGI-2 reasoning puzzles, with agents questioning and challenging each other's solutions.</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fa-solid fa-blog"></i></div>
-        <a href="https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-part-2-d89969e5a005" target="_blank">Building an ARC-AGI-2 Solver (Part 2)</a>
-        <div class="description">ARC-AGI-2 reveals LLM perception gaps: why vision models struggle to count holes—and how text, high-res images, and reflection improve results</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fa-solid fa-blog"></i></div>
-        <a href="https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-from-socratic-panels-to-a-single-oracle-e928cdddf20c" target="_blank">Building an ARC-AGI-2 Solver (Part 3)</a>
-        <div class="description">Building an ARC-2 solver: from multi-agent debate to a tool-augmented Oracle achieving 50–70%+ on the public evaluation dataset.</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fa-solid fa-blog"></i></div>
-        <a href="https://medium.com/towards-artificial-intelligence/what-if-a-tiny-always-on-local-ai-became-ambient-infrastructure-2d16a52764a2" target="_blank">What If a Tiny Always-On Local AI Became Ambient Infrastructure?</a>
-        <div class="description">Raising a capable AI agent on a limited local compute budget</div>
-      </div>
-
-      <div class="tile">
-        <div class="icon"><i class="fa-solid fa-blog"></i></div>
-        <a href="https://medium.com/@rahul_ray/vibe-coded-apps-are-the-new-excel-that-might-be-okay-d31870ee4171" target="_blank">Vibe-Coded Apps Are the New Excel. That Might Be Okay.</a>
-        <div class="description">Rethinking software built in an afternoon</div>
-      </div>
-    </div>
+  <div id="page-title">FinTech AI Lab &mdash; Finance tools and AI experiments by Rahul Ray</div>
+  <div id="legend">
+    <div class="leg"><div class="leg-dot" style="background:#60a5fa"></div><span style="color:rgba(96,165,250,0.7)">Tools</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#4ade80"></div><span style="color:rgba(74,222,128,0.7)">Open Source</span></div>
+    <div class="leg"><div class="leg-dot" style="background:#c084fc"></div><span style="color:rgba(192,132,252,0.7)">Writing</span></div>
   </div>
   <footer>
     These AI applications are prototypes provided for educational and illustrative use. They should not be relied upon for financial, investment, or legal decision-making.<br>
@@ -313,5 +136,340 @@
     <a href="https://www.linkedin.com/in/rahul-ray-a5130735" target="_blank">LinkedIn</a>
   </footer>
 
+  <script>
+    // Node groups: hub=0, tools=1-10, oss=11-21, writing=22-26
+    const NODE_DEFS = [
+      // ── Hub ──────────────────────────────────────────────────────────
+      { id: 0,  label: 'FinTech AI Lab', rx: 0.50, ry: 0.50, color: '#e8e8ff', size: 13,
+        type: 'hub', action: null, desc: 'Finance tools and AI experiments by Rahul Ray' },
+
+      // ── Tools (blue) — top-left arc ──────────────────────────────────
+      { id: 1,  label: 'Data Analyzer',      rx: 0.18, ry: 0.22, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://web-production-00170.up.railway.app',
+        desc: 'Perform data analysis using advanced machine learning techniques' },
+      { id: 2,  label: 'Earnings Analyzer',  rx: 0.08, ry: 0.38, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://earnings-transcript-analyzer-production.up.railway.app',
+        desc: 'Generate summary and line-by-line sentiment analysis of documents (e.g., speeches, earnings calls)' },
+      { id: 3,  label: 'ERFinData',          rx: 0.12, ry: 0.55, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://erfindata.up.railway.app/',
+        desc: 'Extract raw financial data from earnings press releases' },
+      { id: 4,  label: 'file-repo',          rx: 0.22, ry: 0.68, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://file-repo-production.up.railway.app/',
+        desc: 'Lightweight file repository utility for organizing and managing local file collections' },
+      { id: 5,  label: 'KPIx',              rx: 0.30, ry: 0.20, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://kpix.up.railway.app/',
+        desc: 'Perform slide-by-slide analysis and executive summary of a slide deck or KPI report' },
+      { id: 6,  label: 'Macro AI Summary',   rx: 0.06, ry: 0.22, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://macro-data-analyzer-production.up.railway.app',
+        desc: 'AI-generated summaries of charts in a multi-sheet excel file' },
+      { id: 7,  label: 'Model Analysis',     rx: 0.06, ry: 0.68, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://model-analysis-production.up.railway.app/',
+        desc: 'Drill-down analysis of live excel financial models' },
+      { id: 8,  label: 'Q&A Assistant',      rx: 0.18, ry: 0.78, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://investor-qa-assistant.vercel.app',
+        desc: 'Query an unlimited set of pdf files, exhaustively or RAG-based' },
+      { id: 9,  label: 'Speech Writer',      rx: 0.28, ry: 0.34, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://speech-writer.up.railway.app/',
+        desc: 'Train on a speaker style, then create speeches in that style from bullet points' },
+      { id: 10, label: 'ThinkTank-AI',       rx: 0.28, ry: 0.80, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://thinktank-ai.up.railway.app/',
+        desc: 'Create virtual panels or focus groups using AI agents' },
+
+      // ── Open Source (green) — top-right arc ──────────────────────────
+      { id: 11, label: 'ai-hub',                   rx: 0.70, ry: 0.20, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/ai-hub',
+        desc: 'Constellation-style local launch dashboard — click nodes to open URLs, launch apps, run scripts, or open files' },
+      { id: 12, label: 'chat-TRM',                 rx: 0.82, ry: 0.14, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/chat-trm',
+        desc: 'Experimental Tiny Recursion Model (TRM) Chat App with only 3.5M parameters' },
+      { id: 13, label: 'end2end-desktop',          rx: 0.92, ry: 0.28, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/end2end-desktop-automation',
+        desc: 'Image-based desktop automation framework for Windows apps — configuration-driven, works with any UI toolkit' },
+      { id: 14, label: 'Google AI Search MCP',     rx: 0.94, ry: 0.44, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/gai-search-local-rr',
+        desc: 'MCP server that searches Google in AI mode and returns the AI-generated summary as plain text' },
+      { id: 15, label: 'image-files-summary',      rx: 0.92, ry: 0.60, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/image-files-summary',
+        desc: 'Generate AI-powered summaries of image files in a directory' },
+      { id: 16, label: 'kaibot',                   rx: 0.82, ry: 0.72, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/kaibot',
+        desc: 'Background AI coach that monitors your Outlook calendar, inbox, and OneDrive — checks in with short coaching messages throughout the day' },
+      { id: 17, label: 'oracle-arc-solver',        rx: 0.70, ry: 0.80, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/oracle-arc-solver-public',
+        desc: 'Solver for ARC (Abstraction and Reasoning Corpus) puzzles using oracle-guided search' },
+      { id: 18, label: 'pdf-files-concatinate',   rx: 0.60, ry: 0.22, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/pdf-files-concatinate',
+        desc: 'Batch-concatenate multiple PDF files into a single document in a specified order' },
+      { id: 19, label: 'split-mp4',               rx: 0.94, ry: 0.14, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/split-mp4',
+        desc: 'Split a large MP4 file into n equal-length segments' },
+      { id: 20, label: 'text2speech',             rx: 0.60, ry: 0.78, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/text2speech',
+        desc: 'Converts a text file to an MP3 audio file using Microsoft\'s neural TTS (Jenny voice)' },
+      { id: 21, label: 'windows-portable-harness',rx: 0.72, ry: 0.34, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/windows_portable_ai_app_harness',
+        desc: 'Specification for building portable Windows desktop apps with AI agents — no installs, no admin rights, no command line required' },
+
+      // ── Writing (purple) — bottom arc ────────────────────────────────
+      { id: 22, label: 'ARC-AGI-2 Solver (1)', rx: 0.32, ry: 0.88, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-my-multi-agent-socratic-reasoning-journey-305c081611c6',
+        desc: 'How a multi-agent Socratic debate architecture was designed to tackle ARC-AGI-2 reasoning puzzles' },
+      { id: 23, label: 'ARC-AGI-2 Solver (2)', rx: 0.41, ry: 0.92, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-part-2-d89969e5a005',
+        desc: 'ARC-AGI-2 reveals LLM perception gaps: why vision models struggle to count holes — and how text, high-res images, and reflection improve results' },
+      { id: 24, label: 'ARC-AGI-2 Solver (3)', rx: 0.50, ry: 0.90, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-from-socratic-panels-to-a-single-oracle-e928cdddf20c',
+        desc: 'From multi-agent debate to a tool-augmented Oracle achieving 50–70%+ on the public evaluation dataset' },
+      { id: 25, label: 'Ambient AI Infrastructure', rx: 0.59, ry: 0.92, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/towards-artificial-intelligence/what-if-a-tiny-always-on-local-ai-became-ambient-infrastructure-2d16a52764a2',
+        desc: 'Raising a capable AI agent on a limited local compute budget' },
+      { id: 26, label: 'Vibe-Coded Apps',       rx: 0.68, ry: 0.88, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/@rahul_ray/vibe-coded-apps-are-the-new-excel-that-might-be-okay-d31870ee4171',
+        desc: 'Rethinking software built in an afternoon' },
+    ];
+
+    // Hub → all; full mesh within each group
+    function buildEdges() {
+      const edges = [];
+      const tools   = [1,2,3,4,5,6,7,8,9,10];
+      const oss     = [11,12,13,14,15,16,17,18,19,20,21];
+      const writing = [22,23,24,25,26];
+
+      // Hub to all
+      for (let i = 1; i <= 26; i++) edges.push([0, i]);
+
+      // Intra-group full mesh
+      [tools, oss, writing].forEach(grp => {
+        for (let i = 0; i < grp.length; i++)
+          for (let j = i + 1; j < grp.length; j++)
+            edges.push([grp[i], grp[j]]);
+      });
+
+      return edges;
+    }
+    const EDGE_LIST = buildEdges();
+
+    // ── canvas setup ─────────────────────────────────────────────────────
+    const canvas  = document.getElementById('c');
+    const ctx     = canvas.getContext('2d');
+    const ui      = document.getElementById('ui');
+    const tooltip = document.getElementById('tooltip');
+
+    let W, H;
+    let nodes = [], conns = [], particles = [], ripples = [];
+    let hovered = null, labelEls = [], lastSpawn = 0;
+
+    // ── helpers ───────────────────────────────────────────────────────────
+    function rgba(hex, a) {
+      const n = parseInt(hex.replace('#',''), 16);
+      return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+    }
+
+    function bezierPt(t, p0, cp, p1) {
+      const u = 1 - t;
+      return { x: u*u*p0.x + 2*u*t*cp.x + t*t*p1.x, y: u*u*p0.y + 2*u*t*cp.y + t*t*p1.y };
+    }
+
+    function radialGlow(x, y, r, color, alpha) {
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0,   rgba(color, alpha));
+      g.addColorStop(0.5, rgba(color, alpha * 0.4));
+      g.addColorStop(1,   rgba(color, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+    }
+
+    // ── init ─────────────────────────────────────────────────────────────
+    function init() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+
+      nodes = NODE_DEFS.map(d => ({
+        ...d,
+        x: d.rx * W, y: d.ry * H,
+        breath: Math.random() * Math.PI * 2,
+        pulse: 0,
+      }));
+
+      conns = EDGE_LIST.map(([a, b]) => {
+        const na = nodes[a], nb = nodes[b];
+        const mx = (na.x + nb.x) / 2, my = (na.y + nb.y) / 2;
+        const dx = nb.x - na.x,       dy = nb.y - na.y;
+        const len = Math.hypot(dx, dy);
+        const curl = ((a + b) % 2 === 0 ? 1 : -1) * len * 0.18;
+        return {
+          a, b,
+          cp: { x: mx - (dy / len) * curl, y: my + (dx / len) * curl },
+          glowPhase: Math.random() * Math.PI * 2,
+        };
+      });
+
+      ui.innerHTML = '';
+      labelEls = nodes.map(n => {
+        const el = document.createElement('div');
+        el.className = 'lbl';
+        el.style.color = n.color;
+        el.appendChild(document.createTextNode(n.label));
+        if (n.type !== 'hub') {
+          const b = document.createElement('span');
+          b.className = `badge badge-${n.type}`;
+          b.textContent = ({ tools: 'TOOL', oss: 'OSS', writing: 'ARTICLE' })[n.type] || n.type.toUpperCase();
+          el.appendChild(b);
+        }
+        ui.appendChild(el);
+        return el;
+      });
+
+      particles = []; ripples = [];
+      conns.forEach((c, i) => setTimeout(() => spawn(c), i * 60 + Math.random() * 200));
+    }
+
+    // ── particles ─────────────────────────────────────────────────────────
+    function spawn(conn) {
+      const dir   = Math.random() > 0.5 ? 1 : -1;
+      const fromI = dir > 0 ? conn.a : conn.b;
+      const toI   = dir > 0 ? conn.b : conn.a;
+      particles.push({
+        conn, fromI, toI, t: 0,
+        speed: 0.0010 + Math.random() * 0.0018,
+        trail: [], color: nodes[fromI].color, sz: 1.8 + Math.random() * 1.4,
+      });
+    }
+
+    // ── launch ────────────────────────────────────────────────────────────
+    function launch(n) {
+      if (!n.action) return;
+      window.open(n.action, '_blank');
+    }
+
+    // ── draw ──────────────────────────────────────────────────────────────
+    function frame(ts) {
+      ctx.clearRect(0, 0, W, H);
+
+      const bg = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.hypot(W, H) * 0.6);
+      bg.addColorStop(0, '#0c0c18');
+      bg.addColorStop(1, '#020308');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+      // Connections
+      conns.forEach(c => {
+        const na = nodes[c.a], nb = nodes[c.b];
+        const lit = hovered && (c.a === hovered.id || c.b === hovered.id);
+        const pulse = 0.04 + 0.018 * Math.sin(ts * 0.0007 + c.glowPhase);
+        ctx.beginPath(); ctx.moveTo(na.x, na.y);
+        ctx.quadraticCurveTo(c.cp.x, c.cp.y, nb.x, nb.y);
+        ctx.strokeStyle = lit ? 'rgba(255,255,255,0.26)' : `rgba(160,160,255,${pulse})`;
+        ctx.lineWidth   = lit ? 1.2 : 0.55;
+        ctx.stroke();
+      });
+
+      // Particles
+      particles = particles.filter(p => {
+        const na  = nodes[p.fromI], nb = nodes[p.toI];
+        const pos = bezierPt(p.t, na, p.conn.cp, nb);
+        p.trail.unshift({ x: pos.x, y: pos.y });
+        if (p.trail.length > 18) p.trail.pop();
+
+        p.trail.forEach((pt, i) => {
+          const alpha = (1 - i / p.trail.length) * 0.65;
+          const sz    = p.sz * (1 - i / p.trail.length) * 0.6;
+          if (sz < 0.2) return;
+          ctx.beginPath(); ctx.arc(pt.x, pt.y, sz, 0, Math.PI*2);
+          ctx.fillStyle = rgba(p.color, alpha); ctx.fill();
+        });
+        radialGlow(pos.x, pos.y, p.sz * 5, p.color, 0.25);
+        ctx.beginPath(); ctx.arc(pos.x, pos.y, p.sz * 1.1, 0, Math.PI*2);
+        ctx.fillStyle = '#ffffff'; ctx.fill();
+        ctx.beginPath(); ctx.arc(pos.x, pos.y, p.sz * 0.5, 0, Math.PI*2);
+        ctx.fillStyle = p.color; ctx.fill();
+
+        p.t += p.speed;
+        if (p.t >= 1) { nodes[p.toI].pulse = 1.0; return false; }
+        return true;
+      });
+
+      // Respawn particles
+      if (ts - lastSpawn > 500) {
+        lastSpawn = ts;
+        const c = conns[Math.floor(Math.random() * conns.length)];
+        if (particles.filter(p => p.conn === c).length < 2) spawn(c);
+      }
+
+      // Nodes
+      nodes.forEach(n => {
+        const isHov  = hovered === n;
+        const breath = 1 + 0.09 * Math.sin(ts * 0.0009 + n.breath);
+        const r      = n.size * breath * (1 + n.pulse * 0.45);
+
+        radialGlow(n.x, n.y, r * 7,   n.color, 0.07 + n.pulse * 0.14 + (isHov ? 0.10 : 0));
+        radialGlow(n.x, n.y, r * 3.5, n.color, 0.22 + n.pulse * 0.38 + (isHov ? 0.18 : 0));
+        ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI*2);
+        ctx.fillStyle = isHov ? '#ffffff' : rgba(n.color, 0.92); ctx.fill();
+        ctx.beginPath(); ctx.arc(n.x, n.y, r * 2.1, 0, Math.PI*2);
+        ctx.strokeStyle = rgba(n.color, 0.18 + (isHov ? 0.28 : 0) + n.pulse * 0.28);
+        ctx.lineWidth = 0.8; ctx.stroke();
+
+        n.pulse = Math.max(0, n.pulse - 0.022);
+      });
+
+      // Ripples
+      ripples = ripples.filter(rp => {
+        rp.r += 3.8; rp.a -= 0.02;
+        if (rp.a <= 0) return false;
+        ctx.beginPath(); ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI*2);
+        ctx.strokeStyle = rgba(rp.color, rp.a); ctx.lineWidth = 1.2; ctx.stroke();
+        return true;
+      });
+
+      // Labels
+      nodes.forEach((n, i) => {
+        const el = labelEls[i];
+        const r  = n.size * (1 + n.pulse * 0.45);
+        el.style.left    = n.x + 'px';
+        el.style.top     = (n.y + r * 2.9) + 'px';
+        el.style.opacity = hovered === n ? '1' : '0.45';
+        el.style.fontSize = n.id === 0 ? '12px' : '10px';
+      });
+
+      requestAnimationFrame(frame);
+    }
+
+    // ── events ────────────────────────────────────────────────────────────
+    window.addEventListener('resize', init);
+
+    canvas.addEventListener('mousemove', e => {
+      hovered = null; tooltip.style.display = 'none';
+      for (const n of nodes) {
+        if (Math.hypot(n.x - e.clientX, n.y - e.clientY) < n.size * 3.5) {
+          hovered = n; canvas.style.cursor = 'pointer';
+          document.getElementById('tt-name').textContent = n.label;
+          document.getElementById('tt-desc').textContent = n.desc || '';
+          tooltip.style.display = 'block';
+          tooltip.style.left = Math.min(e.clientX + 18, W - 275) + 'px';
+          tooltip.style.top  = Math.max(e.clientY - 14, 8) + 'px';
+          return;
+        }
+      }
+      canvas.style.cursor = 'crosshair';
+    });
+
+    canvas.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; hovered = null; });
+
+    canvas.addEventListener('click', e => {
+      for (const n of nodes) {
+        if (Math.hypot(n.x - e.clientX, n.y - e.clientY) < n.size * 3.5) {
+          n.pulse = 1.6; tooltip.style.display = 'none';
+          for (let i = 0; i < 3; i++)
+            ripples.push({ x: n.x, y: n.y, r: n.size * 0.8, a: 0.75, color: n.color });
+          conns.filter(c => c.a === n.id || c.b === n.id).forEach(c => spawn(c));
+          launch(n);
+          break;
+        }
+      }
+    });
+
+    init();
+    requestAnimationFrame(frame);
+  </script>
 </body>
 </html>
