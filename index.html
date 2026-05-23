@@ -116,8 +116,14 @@
     footer a { color: rgba(168,196,224,0.8); text-decoration: none; }
     footer a:hover { color: #a8c4e0; }
 
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       footer { font-size: 0.55rem; padding: 0.4rem 0.5rem; }
+      .lbl { font-size: 7px; letter-spacing: 0.1em; }
+      .badge { font-size: 5px; padding: 1px 3px; }
+      #page-title { font-size: 7px; letter-spacing: 0.25em; }
+      #legend { gap: 10px; top: 42px; }
+      .leg { font-size: 7px; }
+      .leg-dot { width: 5px; height: 5px; }
     }
   </style>
 </head>
@@ -288,9 +294,13 @@
       W = canvas.width  = window.innerWidth;
       H = canvas.height = window.innerHeight;
 
+      const mobile = Math.min(W, H) < 768;
+      const sizeScale = mobile ? 0.55 : 1.0;
+
       nodes = NODE_DEFS.map(d => ({
         ...d,
         x: d.rx * W, y: d.ry * H,
+        size: d.size * sizeScale,
         breath: Math.random() * Math.PI * 2,
         pulse: 0,
       }));
@@ -426,13 +436,14 @@
       });
 
       // Labels
+      const mobile = Math.min(W, H) < 768;
       nodes.forEach((n, i) => {
         const el = labelEls[i];
         const r  = n.size * (1 + n.pulse * 0.45);
         el.style.left    = n.x + 'px';
         el.style.top     = (n.y + r * 2.9) + 'px';
         el.style.opacity = hovered === n ? '1' : '0.45';
-        el.style.fontSize = n.id === 0 ? '12px' : '10px';
+        el.style.fontSize = n.id === 0 ? (mobile ? '9px' : '12px') : (mobile ? '7px' : '10px');
       });
 
       requestAnimationFrame(frame);
