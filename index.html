@@ -147,7 +147,7 @@
   </footer>
 
   <script>
-    // Node groups: hub=0, tools=1-10, oss=11-21, writing=22-26
+    // Node groups: hub=0, tools=1-10, oss=11-21, writing=22-27
     const NODE_DEFS = [
       // ── Hub ──────────────────────────────────────────────────────────
       { id: 0,  label: 'FinTech AI Lab', rx: 0.50, ry: 0.50, color: '#e8e8ff', size: 13,
@@ -236,6 +236,9 @@
       { id: 26, label: 'Vibe-Coded Apps',       rx: 0.76, ry: 0.78, color: '#c084fc', size: 7,
         type: 'writing', action: 'https://medium.com/@rahul_ray/vibe-coded-apps-are-the-new-excel-that-might-be-okay-d31870ee4171',
         desc: 'Rethinking software built in an afternoon' },
+      { id: 27, label: 'Trans-membrane Protein DFT', rx: 0.88, ry: 0.70, color: '#c084fc', size: 7,
+        type: 'writing', action: 'project-report.pdf',
+        desc: 'Predicting protein function using Discrete Fourier Transforms' },
     ];
 
     // Hub → all; full mesh within each group
@@ -243,10 +246,10 @@
       const edges = [];
       const tools   = [1,2,3,4,5,6,7,8,9,10];
       const oss     = [11,12,13,14,15,16,17,18,19,20,21];
-      const writing = [22,23,24,25,26];
+      const writing = [22,23,24,25,26,27];
 
       // Hub to all
-      for (let i = 1; i <= 26; i++) edges.push([0, i]);
+      for (let i = 1; i <= 27; i++) edges.push([0, i]);
 
       // Intra-group full mesh
       [tools, oss, writing].forEach(grp => {
