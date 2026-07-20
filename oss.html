@@ -1,0 +1,80 @@
+<!-- ABOUTME: Open Source cluster page for burrcap.com — constellation star map of open source projects. -->
+<!-- ABOUTME: Reached by clicking the Open Source node on the main page; hub node here returns to it. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Source — FinTech AI Lab</title>
+  <link rel="stylesheet" href="constellation.css">
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="ui"></div>
+  <div id="tooltip">
+    <div id="tt-name"></div>
+    <div id="tt-desc"></div>
+  </div>
+  <a id="back-link" href="index.html">&larr; FinTech AI Lab</a>
+  <div id="page-title">Open Source &mdash; Projects on GitHub</div>
+
+  <footer>
+    These AI applications are prototypes provided for educational and illustrative use. They should not be relied upon for financial, investment, or legal decision-making.<br>
+    A project by <a href="https://github.com/rray336" target="_blank">Rahul Ray (github.com/rray336)</a> |
+    <a href="https://www.linkedin.com/in/rahul-ray-a5130735" target="_blank">LinkedIn</a>
+  </footer>
+
+  <script src="constellation.js"></script>
+  <script>
+    const NODE_DEFS = [
+      { id: 0, label: 'Open Source', rx: 0.50, ry: 0.50, color: '#4ade80', size: 13,
+        type: 'hub', action: 'index.html', external: false, desc: 'Back to FinTech AI Lab' },
+
+      { id: 1, label: 'ai-hub',                   rx: 0.36, ry: 0.16, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/ai-hub',
+        desc: 'Constellation-style local launch dashboard — click nodes to open URLs, launch apps, run scripts, or open files' },
+      { id: 2, label: 'chat-TRM',                 rx: 0.58, ry: 0.10, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/chat-trm',
+        desc: 'Experimental Tiny Recursion Model (TRM) Chat App with only 3.5M parameters' },
+      { id: 3, label: 'end2end-desktop',          rx: 0.80, ry: 0.20, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/end2end-desktop-automation',
+        desc: 'Image-based desktop automation framework for Windows apps — configuration-driven, works with any UI toolkit' },
+      { id: 4, label: 'Google AI Search MCP',     rx: 0.90, ry: 0.36, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/gai-search-local-rr',
+        desc: 'MCP server that searches Google in AI mode and returns the AI-generated summary as plain text' },
+      { id: 5, label: 'image-files-summary',      rx: 0.88, ry: 0.58, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/image-files-summary',
+        desc: 'Generate AI-powered summaries of image files in a directory' },
+      { id: 6, label: 'kaibot',                   rx: 0.72, ry: 0.74, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/kaibot',
+        desc: 'Background AI coach that monitors your Outlook calendar, inbox, and OneDrive — checks in with short coaching messages throughout the day' },
+      { id: 7, label: 'oracle-arc-solver',        rx: 0.50, ry: 0.62, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/oracle-arc-solver-public',
+        desc: 'Solver for ARC (Abstraction and Reasoning Corpus) puzzles using oracle-guided search' },
+      { id: 8, label: 'pdf-files-concatinate',   rx: 0.28, ry: 0.68, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/pdf-files-concatinate',
+        desc: 'Batch-concatenate multiple PDF files into a single document in a specified order' },
+      { id: 9, label: 'split-mp4',               rx: 0.12, ry: 0.52, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/split-mp4',
+        desc: 'Split a large MP4 file into n equal-length segments' },
+      { id: 10, label: 'text2speech',             rx: 0.16, ry: 0.30, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/text2speech',
+        desc: 'Converts a text file to an MP3 audio file using Microsoft\'s neural TTS (Jenny voice)' },
+      { id: 11, label: 'windows-portable-harness',rx: 0.30, ry: 0.14, color: '#4ade80', size: 7,
+        type: 'oss', action: 'https://github.com/rray336/windows_portable_ai_app_harness',
+        desc: 'Specification for building portable Windows desktop apps with AI agents — no installs, no admin rights, no command line required' },
+    ];
+
+    function buildEdges() {
+      const edges = [];
+      for (let i = 1; i <= 11; i++) edges.push([0, i]);
+      for (let i = 1; i <= 11; i++)
+        for (let j = i + 1; j <= 11; j++)
+          edges.push([i, j]);
+      return edges;
+    }
+
+    initConstellation(NODE_DEFS, buildEdges());
+  </script>
+</body>
+</html>

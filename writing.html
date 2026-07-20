@@ -1,0 +1,65 @@
+<!-- ABOUTME: Writing cluster page for burrcap.com — constellation star map of articles and reports. -->
+<!-- ABOUTME: Reached by clicking the Writing node on the main page; hub node here returns to it. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing — FinTech AI Lab</title>
+  <link rel="stylesheet" href="constellation.css">
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="ui"></div>
+  <div id="tooltip">
+    <div id="tt-name"></div>
+    <div id="tt-desc"></div>
+  </div>
+  <a id="back-link" href="index.html">&larr; FinTech AI Lab</a>
+  <div id="page-title">Writing &mdash; Articles and reports</div>
+
+  <footer>
+    These AI applications are prototypes provided for educational and illustrative use. They should not be relied upon for financial, investment, or legal decision-making.<br>
+    A project by <a href="https://github.com/rray336" target="_blank">Rahul Ray (github.com/rray336)</a> |
+    <a href="https://www.linkedin.com/in/rahul-ray-a5130735" target="_blank">LinkedIn</a>
+  </footer>
+
+  <script src="constellation.js"></script>
+  <script>
+    const NODE_DEFS = [
+      { id: 0, label: 'Writing', rx: 0.50, ry: 0.50, color: '#c084fc', size: 13,
+        type: 'hub', action: 'index.html', external: false, desc: 'Back to FinTech AI Lab' },
+
+      { id: 1, label: 'ARC-AGI-2 Solver (1)', rx: 0.16, ry: 0.30, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-my-multi-agent-socratic-reasoning-journey-305c081611c6',
+        desc: 'How a multi-agent Socratic debate architecture was designed to tackle ARC-AGI-2 reasoning puzzles' },
+      { id: 2, label: 'ARC-AGI-2 Solver (2)', rx: 0.14, ry: 0.62, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-part-2-d89969e5a005',
+        desc: 'ARC-AGI-2 reveals LLM perception gaps: why vision models struggle to count holes — and how text, high-res images, and reflection improve results' },
+      { id: 3, label: 'ARC-AGI-2 Solver (3)', rx: 0.36, ry: 0.82, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/towards-artificial-intelligence/building-an-arc-2-solver-from-socratic-panels-to-a-single-oracle-e928cdddf20c',
+        desc: 'From multi-agent debate to a tool-augmented Oracle achieving 50–70%+ on the public evaluation dataset' },
+      { id: 4, label: 'Ambient AI Infrastructure', rx: 0.64, ry: 0.82, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/towards-artificial-intelligence/what-if-a-tiny-always-on-local-ai-became-ambient-infrastructure-2d16a52764a2',
+        desc: 'Raising a capable AI agent on a limited local compute budget' },
+      { id: 5, label: 'Vibe-Coded Apps',       rx: 0.86, ry: 0.62, color: '#c084fc', size: 7,
+        type: 'writing', action: 'https://medium.com/@rahul_ray/vibe-coded-apps-are-the-new-excel-that-might-be-okay-d31870ee4171',
+        desc: 'Rethinking software built in an afternoon' },
+      { id: 6, label: 'Trans-membrane Protein DFT', rx: 0.84, ry: 0.30, color: '#c084fc', size: 7,
+        type: 'writing', action: 'project-report.pdf',
+        desc: 'Predicting protein function using Discrete Fourier Transforms' },
+    ];
+
+    function buildEdges() {
+      const edges = [];
+      for (let i = 1; i <= 6; i++) edges.push([0, i]);
+      for (let i = 1; i <= 6; i++)
+        for (let j = i + 1; j <= 6; j++)
+          edges.push([i, j]);
+      return edges;
+    }
+
+    initConstellation(NODE_DEFS, buildEdges());
+  </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+/* ABOUTME: Shared styling for the constellation star-map pages (index + cluster drill-downs). */
+/* ABOUTME: Defines canvas, node labels, tooltip, legend, and footer chrome reused across all pages. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #030308;
+}
+
+canvas { display: block; cursor: crosshair; }
+
+#ui { position: fixed; inset: 0; pointer-events: none; }
+
+.lbl {
+  position: absolute;
+  transform: translate(-50%, 0);
+  font-family: 'Segoe UI', system-ui, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  pointer-events: none;
+  white-space: nowrap;
+  text-align: center;
+  transition: opacity 0.25s;
+}
+
+.badge {
+  display: block;
+  margin: 3px auto 0;
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  width: fit-content;
+}
+
+.badge-tools  { color: #60a5fa; border: 1px solid rgba(96,165,250,0.4); background: rgba(96,165,250,0.08); }
+.badge-oss    { color: #4ade80; border: 1px solid rgba(74,222,128,0.4); background: rgba(74,222,128,0.08); }
+.badge-writing{ color: #c084fc; border: 1px solid rgba(192,132,252,0.4); background: rgba(192,132,252,0.08); }
+
+#tooltip {
+  position: fixed;
+  display: none;
+  pointer-events: none;
+  background: rgba(6,8,20,0.92);
+  border: 1px solid rgba(120,140,200,0.22);
+  border-radius: 6px;
+  padding: 9px 14px;
+  max-width: 260px;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+#tt-name { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 12px; font-weight: 600; color: rgba(220,232,255,0.95); margin-bottom: 4px; }
+#tt-desc { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 10px; color: rgba(140,165,220,0.70); line-height: 1.5; }
+
+#page-title {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.22);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+#legend {
+  position: fixed;
+  top: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  pointer-events: none;
+  user-select: none;
+}
+.leg {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.leg-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+#back-link {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(220,232,255,0.55);
+  text-decoration: none;
+  z-index: 20;
+  transition: color 0.2s;
+}
+#back-link:hover { color: rgba(220,232,255,0.9); }
+
+footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  text-align: center;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.75rem;
+  color: rgba(168,196,224,0.6);
+  padding: 0.6rem 0.5rem;
+  border-top: 1px solid rgba(30,58,95,0.4);
+  background: rgba(7,16,32,0.7);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+  z-index: 20;
+}
+footer a { color: rgba(168,196,224,0.8); text-decoration: none; }
+footer a:hover { color: #a8c4e0; }
+
+@media (max-width: 768px) {
+  footer { font-size: 0.55rem; padding: 0.4rem 0.5rem; }
+  .lbl { font-size: 7px; letter-spacing: 0.1em; }
+  .badge { font-size: 5px; padding: 1px 3px; }
+  #page-title { font-size: 7px; letter-spacing: 0.25em; }
+  #legend { gap: 10px; top: 42px; }
+  .leg { font-size: 7px; }
+  .leg-dot { width: 5px; height: 5px; }
+  #back-link { top: 16px; left: 16px; font-size: 9px; }
+}

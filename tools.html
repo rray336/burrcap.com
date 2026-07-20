@@ -1,0 +1,77 @@
+<!-- ABOUTME: Tools cluster page for burrcap.com — constellation star map of finance/AI web tools. -->
+<!-- ABOUTME: Reached by clicking the Tools node on the main page; hub node here returns to it. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools — FinTech AI Lab</title>
+  <link rel="stylesheet" href="constellation.css">
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="ui"></div>
+  <div id="tooltip">
+    <div id="tt-name"></div>
+    <div id="tt-desc"></div>
+  </div>
+  <a id="back-link" href="index.html">&larr; FinTech AI Lab</a>
+  <div id="page-title">Tools &mdash; Finance and AI web tools</div>
+
+  <footer>
+    These AI applications are prototypes provided for educational and illustrative use. They should not be relied upon for financial, investment, or legal decision-making.<br>
+    A project by <a href="https://github.com/rray336" target="_blank">Rahul Ray (github.com/rray336)</a> |
+    <a href="https://www.linkedin.com/in/rahul-ray-a5130735" target="_blank">LinkedIn</a>
+  </footer>
+
+  <script src="constellation.js"></script>
+  <script>
+    const NODE_DEFS = [
+      { id: 0, label: 'Tools', rx: 0.50, ry: 0.50, color: '#60a5fa', size: 13,
+        type: 'hub', action: 'index.html', external: false, desc: 'Back to FinTech AI Lab' },
+
+      { id: 1,  label: 'Data Analyzer',      rx: 0.38, ry: 0.14, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://web-production-00170.up.railway.app',
+        desc: 'Perform data analysis using advanced machine learning techniques' },
+      { id: 2,  label: 'Earnings Analyzer',  rx: 0.16, ry: 0.24, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://earnings-transcript-analyzer-production.up.railway.app',
+        desc: 'Generate summary and line-by-line sentiment analysis of documents (e.g., speeches, earnings calls)' },
+      { id: 3,  label: 'ERFinData',          rx: 0.14, ry: 0.50, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://erfindata.up.railway.app/',
+        desc: 'Extract raw financial data from earnings press releases' },
+      { id: 4,  label: 'file-repo',          rx: 0.34, ry: 0.44, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://file-repo-production.up.railway.app/',
+        desc: 'Lightweight file repository utility for organizing and managing local file collections' },
+      { id: 5,  label: 'KPIx',              rx: 0.58, ry: 0.12, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://kpix.up.railway.app/',
+        desc: 'Perform slide-by-slide analysis and executive summary of a slide deck or KPI report' },
+      { id: 6,  label: 'Macro AI Summary',   rx: 0.78, ry: 0.20, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://macro-data-analyzer-production.up.railway.app',
+        desc: 'AI-generated summaries of charts in a multi-sheet excel file' },
+      { id: 7,  label: 'Model Analysis',     rx: 0.18, ry: 0.78, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://model-analysis-production.up.railway.app/',
+        desc: 'Drill-down analysis of live excel financial models' },
+      { id: 8,  label: 'Q&A Assistant',      rx: 0.40, ry: 0.82, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://investor-qa-assistant.vercel.app',
+        desc: 'Query an unlimited set of pdf files, exhaustively or RAG-based' },
+      { id: 9,  label: 'Speech Writer',      rx: 0.62, ry: 0.80, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://speech-writer.up.railway.app/',
+        desc: 'Train on a speaker style, then create speeches in that style from bullet points' },
+      { id: 10, label: 'ThinkTank-AI',       rx: 0.82, ry: 0.62, color: '#60a5fa', size: 7,
+        type: 'tools', action: 'https://thinktank-ai.up.railway.app/',
+        desc: 'Create virtual panels or focus groups using AI agents' },
+    ];
+
+    function buildEdges() {
+      const edges = [];
+      for (let i = 1; i <= 10; i++) edges.push([0, i]);
+      for (let i = 1; i <= 10; i++)
+        for (let j = i + 1; j <= 10; j++)
+          edges.push([i, j]);
+      return edges;
+    }
+
+    initConstellation(NODE_DEFS, buildEdges());
+  </script>
+</body>
+</html>
